@@ -1,0 +1,16 @@
+{
+  "name": "node_apple",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongodb": "^3.6.4",
+    "mongoose": "^7.2.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.2.5",
+    "prettier": "^2.8.8",
+    "typescript": "^5.1.3"
+  }
+}
