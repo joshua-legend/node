@@ -1,19 +1,22 @@
 const express = require("express");
 const router = express.Router();
-const { getUserByUsername } = require("../database");
+const { loginAdmin } = require("../database");
 
 router.post("/", async (req, res) => {
   try {
-    // Login 라우트 로직
-    console.log(req.body);
-    // const user = await getUserByUsername(req.body.username);
-    if (user) {
-      res.status(200).send("success");
+    const result = await loginAdmin(req.body.username, req.body.password);
+    if (result) {
+      console.log(req.session);
+      req.session.loggedIn = true;
+      console.log(req.session);
+      res.status(200).json({ success: true, message: "로그인 성공", data: {} });
     } else {
-      res.status(401).send("인증 실패");
+      res
+        .status(200)
+        .json({ success: false, message: "로그인 실패", data: {} });
     }
   } catch (error) {
-    res.status(500).send("서버 오류");
+    res.status(500).json({ success: false, message: "서버 오류", data: {} });
   }
 });
 
