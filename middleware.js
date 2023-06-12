@@ -11,7 +11,7 @@ const setupMiddleware = (app) => {
       saveUninitialized: false,
       cookie: {
         httpOnly: true,
-        secure: false,
+        secure: true,
         maxAge: 5 * 60 * 1000, // 5분(밀리초 단위로 지정)
       },
     })
