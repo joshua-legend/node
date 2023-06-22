@@ -1,5 +1,5 @@
 const { MongoClient } = require("mongodb");
-const { APIKEY, DB, ADMIN_COLLECTION } = require("./configs");
+const { APIKEY, DB, ADMIN_COLLECTION, STORES_COLLECTION, ITEMS_COLLECTION } = require("./configs");
 
 const client = new MongoClient(APIKEY);
 
@@ -20,7 +20,32 @@ const loginAdmin = async (username, password) => {
   return !!admin; // 로그인 성공한 경우 true 반환, 그렇지 않은 경우 false 반환
 };
 
+const getItemsByStore = async (storeId) => {
+  const store = await client.db(DB).collection(STORES_COLLECTION).findOne({ _id: storeId });
+  if (!store) throw new Error(`Store with id ${storeId} not found`);
+  const items = await client
+    .db(DB)
+    .collection(ITEMS_COLLECTION)
+    .find({ located: store._id })
+    .toArray();
+  console.log(items);
+  const data = {
+    storeName: store.storeName,
+    items,
+  };
+  return data;
+};
+
+const postItemsByStore = async (storeId, items) => {
+  items = items.map((item) => ({ ...item, located: `store${storeId}` }));
+  const result = await client.db(DB).collection(ITEMS_COLLECTION).insertMany(items);
+  console.log(result.ok);
+  return result.ok;
+};
+
 module.exports = {
   connectToDatabase,
   loginAdmin,
+  getItemsByStore,
+  postItemsByStore,
 };
