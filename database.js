@@ -1,4 +1,4 @@
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 const { APIKEY, DB, ADMIN_COLLECTION, STORES_COLLECTION, ITEMS_COLLECTION } = require("./configs");
 
 const client = new MongoClient(APIKEY);
@@ -43,9 +43,20 @@ const postItemsByStore = async (storeId, items) => {
   return result.ok;
 };
 
+const deleteItemsByStore = async (storeId, items) => {
+  const itemIds = items.map((item) => ObjectId(item._id));
+  console.log(itemIds);
+  const result = await client
+    .db(DB)
+    .collection(ITEMS_COLLECTION)
+    .deleteMany({ _id: { $in: itemIds } });
+  return result.ok;
+};
+
 module.exports = {
   connectToDatabase,
   loginAdmin,
   getItemsByStore,
   postItemsByStore,
+  deleteItemsByStore,
 };

@@ -1,6 +1,6 @@
 // routes.js
 
-const { loginAdmin, getItemsByStore, postItemsByStore } = require("./database");
+const { loginAdmin, getItemsByStore, postItemsByStore, deleteItemsByStore } = require("./database");
 
 exports.applyRoutes = (app) => {
   app.post("/login", async (req, res) => {
@@ -36,6 +36,18 @@ exports.applyRoutes = (app) => {
     const data = req.body; // modify this line
     console.log(data);
     const result = await postItemsByStore(`${id}`, data);
+    const isSuccess = result === 1;
+    return res.status(200).json({ success: isSuccess });
+  });
+
+  app.post("/deleteItemsByStore/:id", async (req, res) => {
+    const { id } = req.params;
+    const toBeDeletedData = req.body; // modify this line
+    if (!toBeDeletedData) {
+      return res.status(200).json({ success: isSuccess });
+    }
+
+    const result = await deleteItemsByStore(`${id}`, toBeDeletedData);
     const isSuccess = result === 1;
     return res.status(200).json({ success: isSuccess });
   });
