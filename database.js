@@ -39,13 +39,11 @@ const getItemsByStore = async (storeId) => {
 const postItemsByStore = async (storeId, items) => {
   items = items.map((item) => ({ ...item, located: `store${storeId}` }));
   const result = await client.db(DB).collection(ITEMS_COLLECTION).insertMany(items);
-  console.log(result.ok);
   return result.ok;
 };
 
 const deleteItemsByStore = async (storeId, items) => {
   const itemIds = items.map((item) => ObjectId(item._id));
-  console.log(itemIds);
   const result = await client
     .db(DB)
     .collection(ITEMS_COLLECTION)

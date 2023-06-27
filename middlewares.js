@@ -21,10 +21,7 @@ exports.applyMiddlewares = (app) => {
       store: new FileStore({
         path: "./sessions",
       }),
-      cookie: {
-        httpOnly: true,
-        secure: false,
-      },
+      cookie: {},
     })
   );
 };
