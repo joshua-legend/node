@@ -3,7 +3,7 @@
 const express = require("express");
 const app = express();
 const { applyMiddlewares } = require("./middlewares");
-const { applyRoutes } = require("./routes");
+const { applyRoutes } = require("./routes/routes");
 const { connectToDatabase } = require("./database");
 const { port } = require("./configs");
 

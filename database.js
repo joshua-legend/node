@@ -28,7 +28,6 @@ const getItemsByStore = async (storeId) => {
     .collection(ITEMS_COLLECTION)
     .find({ located: store._id })
     .toArray();
-  console.log(items);
   const data = {
     storeName: store.storeName,
     items,
@@ -43,7 +42,7 @@ const postItemsByStore = async (storeId, items) => {
 };
 
 const deleteItemsByStore = async (storeId, items) => {
-  const itemIds = items.map((item) => ObjectId(item._id));
+  const itemIds = items.map((item) => item._id);
   const result = await client
     .db(DB)
     .collection(ITEMS_COLLECTION)
