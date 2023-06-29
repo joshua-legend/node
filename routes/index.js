@@ -5,6 +5,8 @@ const getItem = require("./items/getItem");
 const postItem = require("./items/postItem");
 const deleteItem = require("./items/deleteItem");
 
+const auth = require("./auth/auth");
+
 module.exports = {
   adminCheck,
   adminLogin,
@@ -12,4 +14,5 @@ module.exports = {
   getItem,
   postItem,
   deleteItem,
+  auth,
 };

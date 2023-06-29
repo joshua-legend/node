@@ -1,7 +1,8 @@
-const { MongoClient, ObjectId } = require("mongodb");
-const { APIKEY, DB, ADMIN_COLLECTION, STORES_COLLECTION, ITEMS_COLLECTION } = require("./configs");
+const { MongoClient } = require("mongodb");
+const { DB, ADMIN_COLLECTION, STORES_COLLECTION, ITEMS_COLLECTION } = require("./configs");
+require("dotenv").config();
 
-const client = new MongoClient(APIKEY);
+const client = new MongoClient(process.env.DB_PASSWORD);
 
 const connectToDatabase = async () => {
   try {
@@ -49,6 +50,8 @@ const deleteItemsByStore = async (storeId, items) => {
     .deleteMany({ _id: { $in: itemIds } });
   return result.ok;
 };
+
+const getUser = async () => {};
 
 module.exports = {
   connectToDatabase,

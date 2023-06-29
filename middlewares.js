@@ -3,6 +3,7 @@
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const FileStore = require("session-file-store")(session);
+const passport = require("passport");
 
 exports.applyMiddlewares = (app) => {
   app.use(bodyParser.json());
@@ -21,7 +22,12 @@ exports.applyMiddlewares = (app) => {
       store: new FileStore({
         path: "./sessions",
       }),
-      cookie: {},
+      cookie: {
+        httpOnly: true,
+        secure: false,
+      },
     })
   );
+  app.use(passport.initialize());
+  app.use(passport.session());
 };
