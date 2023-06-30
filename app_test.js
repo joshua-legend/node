@@ -1,8 +1,6 @@
 // server.js
 
 const express = require("express");
-const passport = require("passport");
-
 const app = express();
 const { applyMiddlewares } = require("./middlewares");
 const { applyRoutes } = require("./routes/routes");

@@ -1,8 +1,17 @@
 const { MongoClient } = require("mongodb");
-const { DB, ADMIN_COLLECTION, STORES_COLLECTION, ITEMS_COLLECTION } = require("./configs");
+const {
+  DB,
+  ADMIN_COLLECTION,
+  STORES_COLLECTION,
+  ITEMS_COLLECTION,
+  USERS_COLLECTION,
+} = require("./configs");
 require("dotenv").config();
 
-const client = new MongoClient(process.env.DB_PASSWORD);
+const client = new MongoClient(process.env.DB_PASSWORD, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const connectToDatabase = async () => {
   try {
@@ -51,7 +60,36 @@ const deleteItemsByStore = async (storeId, items) => {
   return result.ok;
 };
 
-const getUser = async () => {};
+const getUserById = async (id) => {
+  const collection = await client.db(DB).collection(USERS_COLLECTION);
+  return await collection.findOne({ id: id });
+};
+
+const getNaverUser = async (profile) => {
+  const collection = await client.db(DB).collection(USERS_COLLECTION);
+  const user = await collection.findOne({ id: profile.id });
+
+  if (!user) {
+    console.log("통과!");
+    const newUser = {
+      id: profile.id,
+      provider: profile.provider,
+      nickname: profile.nickname,
+      profileImage: profile.profileImage,
+      age: profile.age,
+      gender: profile.gender,
+      email: profile.email,
+      mobile: profile.mobile,
+      mobileE164: profile.mobileE164,
+      name: profile.name,
+      birthday: profile.birthday,
+      birthYear: profile.birthYear,
+    };
+    const result = await collection.insertOne(newUser);
+    return result.ops[0];
+  }
+  return user;
+};
 
 module.exports = {
   connectToDatabase,
@@ -59,4 +97,6 @@ module.exports = {
   getItemsByStore,
   postItemsByStore,
   deleteItemsByStore,
+  getUserById,
+  getNaverUser,
 };

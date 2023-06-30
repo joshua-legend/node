@@ -2,18 +2,21 @@
 const passport = require("passport");
 const local = require("./localStrategy");
 const naver = require("./naverStrategy");
-const user = require("../models/user");
+const { getUserById } = require("../database"); // Add this line
 
 module.exports = () => {
   passport.serializeUser((user, done) => {
     done(null, user.id);
   });
 
-  passport.deserializeUser((id, done) => {
-    user
-      .findById(id)
-      .then((user) => done(null, user))
-      .catch((err) => done(err));
+  passport.deserializeUser(async (id, done) => {
+    try {
+      const user = await getUserById(id);
+      done(null, user);
+    } catch (error) {
+      console.error(error);
+      done(error, false);
+    }
   });
 
   local();
