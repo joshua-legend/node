@@ -2,6 +2,7 @@
 const passport = require("passport");
 const local = require("./localStrategy");
 const naver = require("./naverStrategy");
+const kakao = require("./kakaoStrategy");
 const { getUserById } = require("../database"); // Add this line
 
 module.exports = () => {
@@ -21,4 +22,5 @@ module.exports = () => {
 
   local();
   naver();
+  kakao();
 };

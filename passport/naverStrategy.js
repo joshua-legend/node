@@ -1,6 +1,6 @@
-// passport/naverStrategy.js
 const passport = require("passport");
-const { Strategy: NaverStrategy, Profile: NaverProfile } = require("passport-naver-v2");
+const jwt = require("jsonwebtoken");
+const { Strategy: NaverStrategy } = require("passport-naver-v2");
 const { getNaverUser } = require("../database");
 
 module.exports = () => {
@@ -13,11 +13,16 @@ module.exports = () => {
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
-          console.log(accessToken);
           const user = await getNaverUser(profile);
+          const payload = {
+            id: user.id,
+            provider: user.provider,
+            nickname: user.nickname,
+          };
+          const token = jwt.sign(payload, "jwtSecret", { expiresIn: 3600 }, {});
+          user.token = token;
           done(null, user);
         } catch (error) {
-          console.error(error);
           done(error);
         }
       }

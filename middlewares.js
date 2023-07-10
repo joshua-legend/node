@@ -1,8 +1,8 @@
 // middlewares.js
 
 const bodyParser = require("body-parser");
-const session = require("express-session");
-const FileStore = require("session-file-store")(session);
+// const session = require("express-session");
+// const FileStore = require("session-file-store")(session);
 const passport = require("passport");
 
 exports.applyMiddlewares = (app) => {
@@ -14,20 +14,5 @@ exports.applyMiddlewares = (app) => {
     res.header("Access-Control-Allow-Credentials", "true");
     next();
   });
-  app.use(
-    session({
-      secret: "09girl",
-      resave: false,
-      saveUninitialized: false,
-      store: new FileStore({
-        path: "./sessions",
-      }),
-      cookie: {
-        httpOnly: true,
-        secure: false,
-      },
-    })
-  );
   app.use(passport.initialize());
-  app.use(passport.session());
 };

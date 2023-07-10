@@ -32,7 +32,7 @@ const loginAdmin = async (username, password) => {
 
 const getItemsByStore = async (storeId) => {
   const store = await client.db(DB).collection(STORES_COLLECTION).findOne({ _id: storeId });
-  if (!store) throw new Error(`Store with id ${storeId} not found`);
+  if (!store) return { message: `Store with id ${storeId} not found` };
   const items = await client
     .db(DB)
     .collection(ITEMS_COLLECTION)
@@ -68,9 +68,8 @@ const getUserById = async (id) => {
 const getNaverUser = async (profile) => {
   const collection = await client.db(DB).collection(USERS_COLLECTION);
   const user = await collection.findOne({ id: profile.id });
-
+  console.log(user);
   if (!user) {
-    console.log("통과!");
     const newUser = {
       id: profile.id,
       provider: profile.provider,
@@ -91,6 +90,22 @@ const getNaverUser = async (profile) => {
   return user;
 };
 
+const getKakaoUser = async (profile) => {
+  const collection = await client.db(DB).collection(USERS_COLLECTION);
+  const user = await collection.findOne({ id: profile.id });
+  if (!user) {
+    const newUser = {
+      id: profile.id,
+      email: profile._json && profile._json.kakao_account_email,
+      nick: profile.displayName,
+      provider: "kakao",
+    };
+    const result = await collection.insertOne(newUser);
+    return result.ops[0];
+  }
+  return user;
+};
+
 module.exports = {
   connectToDatabase,
   loginAdmin,
@@ -99,4 +114,5 @@ module.exports = {
   deleteItemsByStore,
   getUserById,
   getNaverUser,
+  getKakaoUser,
 };
