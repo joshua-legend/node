@@ -5,7 +5,6 @@ const getBandPosts = async (req, res) => {
   const response = await axios.get(get_posts_url);
   const { items } = response.data.result_data;
   const items_array = items.slice(0, 5);
-  console.log(items_array);
   const itemsWithContentsAndPostKey = items_array.map((post) => {
     return {
       post_key: post.post_key,

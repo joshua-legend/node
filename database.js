@@ -5,6 +5,7 @@ const {
   STORES_COLLECTION,
   ITEMS_COLLECTION,
   USERS_COLLECTION,
+  GOCHON_PAGE_COLLECTION,
 } = require("./configs");
 const { postComment } = require("./routes/bands/postComment");
 const axios = require("axios");
@@ -62,7 +63,17 @@ const postItemsByStore = async (storeId, items) => {
 
 const postPageByStore = async (data) => {
   const { store, ...newData } = data;
-  const result = await client.db(DB).collection(store).insertOne(newData);
+  const { startDay, endDay, ...restData } = newData;
+  const startDayDate = new Date(startDay).toISOString().split("T")[0];
+  const endDayDate = new Date(endDay).toISOString().split("T")[0];
+  const updatedData = {
+    ...restData,
+    startDay: startDayDate,
+    endDay: endDayDate,
+  };
+  const result = await client.db(DB).collection(store).insertOne(updatedData);
+
+  // const result = await client.db(DB).collection(store).insertOne(newData);
 
   const storeLink = store.replace("_pages", "");
   const { _id, post_key } = newData;
@@ -74,6 +85,14 @@ const postPageByStore = async (data) => {
   const { result_data } = response;
   console.log(result_data);
 
+  return result.ok;
+};
+
+const deletePagesById = async (ids) => {
+  const result = await client
+    .db(DB)
+    .collection(GOCHON_PAGE_COLLECTION)
+    .deleteMany({ _id: { $in: ids } });
   return result.ok;
 };
 
@@ -194,6 +213,7 @@ module.exports = {
   postPageByStore,
   postReceiptByUser,
   getReceiptById,
+  deletePagesById,
   deleteItemsByStore,
   getUserById,
   getNaverUser,

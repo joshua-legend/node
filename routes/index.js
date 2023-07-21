@@ -5,6 +5,7 @@ const getItem = require("./items/getItem");
 const postItem = require("./items/postItem");
 const getPages = require("./pages/getPages");
 const postPage = require("./pages/postPage");
+const deletePages = require("./pages/deletePages");
 const getReceipt = require("./receipt/getReceipt");
 const postReceipt = require("./receipt/postReceipt");
 const getBandPost = require("./bands/getBandPosts");
@@ -19,6 +20,7 @@ module.exports = {
   postItem,
   getPages,
   postPage,
+  deletePages,
   getReceipt,
   postReceipt,
   getBandPost,
