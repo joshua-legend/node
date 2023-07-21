@@ -1,8 +1,8 @@
-const { getItemsByStore } = require("../../database");
+const { getPagesByStore } = require("../../database");
 
-const getItem = async (req, res) => {
+const getPages = async (req, res) => {
   const { id } = req.params;
-  const result = await getItemsByStore(id);
+  const result = await getPagesByStore(id);
   if ("message" in result) {
     return res.status(404).json({ success: false, message: result.message });
   }
@@ -10,4 +10,4 @@ const getItem = async (req, res) => {
   return res.status(200).json({ success: true, data: result });
 };
 
-module.exports = getItem;
+module.exports = getPages;

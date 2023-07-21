@@ -7,8 +7,13 @@ exports.applyRoutes = (app) => {
   app.post("/login", routers.adminLogin);
   app.get("/logout", routers.adminLogout);
   app.get("/checkAuthentication", routers.adminCheck);
+  app.get("/getPagesByStore/:id", routers.getPages);
   app.get("/getItemsByStore/:id", routers.getItem);
   app.post("/postItemsByStore/:id", routers.postItem);
+  app.post("/postPageByStore", routers.postPage);
+  app.get("/getReceipt/:id", routers.getReceipt);
+  app.get("/getBandPosts", routers.getBandPost);
+  app.post("/postReceiptByUser", routers.postReceipt);
   app.post("/deleteItemsByStore/:id", routers.deleteItem);
   app.get("/auth/naver", passport.authenticate("naver")); // 네이버 로그인을 요청하는 경로
   app.get("/auth/naver/logout", passport.authenticate("naver")); // 네이버 로그인을 요청하는 경로
