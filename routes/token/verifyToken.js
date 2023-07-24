@@ -7,6 +7,7 @@ const verifyToken = async (req, res) => {
   }
   try {
     const payload = jwt.verify(token, "jwtSecret");
+    console.log(payload);
     if (!payload) res.status(200).json({ success: false });
     else res.status(200).json({ success: true });
   } catch (error) {

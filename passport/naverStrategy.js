@@ -19,8 +19,9 @@ module.exports = () => {
             provider: user.provider,
             nickname: user.nickname,
           };
-          const token = jwt.sign(payload, "jwtSecret", { expiresIn: 3600 }, {});
+          const token = jwt.sign(payload, "jwtSecret", { expiresIn: "1h" }, {});
           user.token = token;
+          console.log("로그인 완료!");
           done(null, user);
         } catch (error) {
           done(error);
