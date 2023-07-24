@@ -16,11 +16,12 @@ exports.applyRoutes = (app) => {
   app.get("/getBandPosts", routers.getBandPost);
   app.post("/postReceiptByUser", routers.postReceipt);
   app.post("/deleteItemsByStore", routers.deleteItem);
-  app.get("/auth/naver", passport.authenticate("naver")); // 네이버 로그인을 요청하는 경로
+  app.get("/auth/naver", routers.authNaver);
   app.get("/auth/naver/logout", passport.authenticate("naver")); // 네이버 로그인을 요청하는 경로
   app.get("/auth/naver/callback", naverAuth.naverCallback);
   app.get("/auth/naver/disconnect", naverAuth.naverDisconnect);
   app.get("/auth/kakao", passport.authenticate("kakao"));
   app.get("/auth/kakao/callback", kakaoAuth.kakaoCallback);
   app.get("/verifyToken", routers.verifyToken);
+  app.get("/redirect", routers.redirect);
 };

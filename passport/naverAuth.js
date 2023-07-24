@@ -25,7 +25,8 @@ exports.naverCallback = (req, res, next) => {
       };
       const token = jwt.sign(payload, "jwtSecret", { expiresIn: "1h" });
       res.cookie("token", token, { httpOnly: true });
-      return res.redirect("http://localhost:3001/select");
+      const redirectUrl = req.query.state;
+      return res.redirect(`http://localhost:8080/redirect?state=${redirectUrl}`);
     }
   )(req, res, next);
 };
