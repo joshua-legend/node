@@ -1,6 +1,6 @@
-const utilRedirect = (req, res) => {
+const redirect = (req, res) => {
   const redirectUrl = req.query.state;
-  console.log(res.cookies);
+  console.log("리다이렉투");
   res.redirect(`http://localhost:3001${redirectUrl}`);
 };
-module.exports = utilRedirect;
+module.exports = redirect;

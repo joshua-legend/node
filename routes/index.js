@@ -13,7 +13,7 @@ const deleteItem = require("./items/deleteItem");
 const verifyToken = require("./token/verifyToken");
 
 const authNaver = require("./naver/authNaver");
-const redirect = require("./util/utilRedirect");
+const redirect = require("./util/redirect");
 
 module.exports = {
   adminCheck,
