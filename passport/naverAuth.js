@@ -23,10 +23,10 @@ exports.naverCallback = (req, res, next) => {
         name: user.name,
         email: user.email,
       };
-      const token = jwt.sign(payload, "jwtSecret", { expiresIn: "1h" });
-      res.cookie("token", token, { httpOnly: true });
+      // const token = jwt.sign(payload, "jwtSecret", { expiresIn: "1h" });
+      res.cookie("token", user.token, { httpOnly: true });
       const redirectUrl = req.query.state;
-      return res.redirect(`${process.env.CGP_LINK}/redirect?state=${redirectUrl}`);
+      return res.redirect(`${process.env.LOCAL_SERVER_LINK}/redirect?state=${redirectUrl}`);
     }
   )(req, res, next);
 };
