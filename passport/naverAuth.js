@@ -25,8 +25,9 @@ exports.naverCallback = (req, res, next) => {
       };
       const token = jwt.sign(payload, "jwtSecret", { expiresIn: "1h" });
       res.cookie("token", token, { httpOnly: true, secure: false });
-      const redirectUrl = req.query.state;
+      const redirectUrl = req.query.state || "404";
       // return res.redirect(`${process.env.CGP_LINK}/redirect?state=${redirectUrl}`);
+      // return res.status(200).json({ success: true, redirectUrl, token });
       return res.redirect(`${process.env.LOCAL_LINK}`);
     }
   )(req, res, next);
