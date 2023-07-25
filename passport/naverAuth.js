@@ -26,7 +26,8 @@ exports.naverCallback = (req, res, next) => {
       };
       const token = jwt.sign(payload, "jwtSecret", { expiresIn: "1h" });
 
-      res.cookie("token", token, { httpOnly: true });
+      res.setHeader("Set-Cookie", ["mycookie=test; HttpOnly; SameSite=Lax; Path=/"]);
+      // res.cookie("token", token, { httpOnly: true });
       const redirectUrl = req.query.state || "404";
       console.log(redirectUrl);
       return res.redirect(`${process.env.LOCAL_LINK}`);
