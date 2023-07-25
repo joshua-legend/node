@@ -23,8 +23,8 @@ exports.naverCallback = (req, res, next) => {
         name: user.name,
         email: user.email,
       };
-      // const token = jwt.sign(payload, "jwtSecret", { expiresIn: "1h" });
-      res.cookie("token", user.token, { httpOnly: true });
+      const token = jwt.sign(payload, "jwtSecret", { expiresIn: "1h" });
+      res.cookie("token", token, { httpOnly: true, sameSite: "None", secure: true });
       const redirectUrl = req.query.state;
       return res.redirect(`${process.env.CGP_LINK}/redirect?state=${redirectUrl}`);
     }

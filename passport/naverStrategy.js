@@ -21,7 +21,6 @@ module.exports = () => {
           };
           const token = jwt.sign(payload, "jwtSecret", { expiresIn: "1h" }, {});
           user.token = token;
-          console.log("로그인 완료!");
           done(null, user);
         } catch (error) {
           done(error);
