@@ -2,6 +2,7 @@
 const passport = require("passport");
 const axios = require("axios");
 const jwt = require("jsonwebtoken");
+const utilRedirect = require("../routes/util/redirect");
 
 exports.naverCallback = (req, res, next) => {
   passport.authenticate(
@@ -13,7 +14,7 @@ exports.naverCallback = (req, res, next) => {
         return next(err);
       }
       if (!user) {
-        return res.redirect("http://localhost:3001/");
+        return res.redirect(`${process.env.LOCAL_LINK}`);
       }
       const payload = {
         id: user.id,
@@ -24,8 +25,11 @@ exports.naverCallback = (req, res, next) => {
         email: user.email,
       };
       const token = jwt.sign(payload, "jwtSecret", { expiresIn: "1h" });
-      res.cookie("token", token, { httpOnly: true });
-      return res.redirect("http://localhost:3001/select");
+
+      // res.cookie("token", token, { httpOnly: true });
+      res.cookie("token", token);
+      const redirectUrl = req.query.state;
+      return res.redirect(`${process.env.CGP_LINK}/redirect?state=${redirectUrl}`);
     }
   )(req, res, next);
 };
