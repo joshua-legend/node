@@ -25,7 +25,6 @@ exports.naverCallback = (req, res, next) => {
       };
       const token = jwt.sign(payload, "jwtSecret", { expiresIn: "1h" });
       res.cookie("token", token, { httpOnly: true });
-      console.log(`${process.env.CLIENT_URL}/abc`);
       return res.redirect(`${process.env.CLIENT_URL}/abc`);
     }
   )(req, res, next);

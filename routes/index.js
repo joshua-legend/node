@@ -4,6 +4,7 @@ const adminCheck = require("./admin/adminCheck");
 const getItem = require("./items/getItem");
 const postItem = require("./items/postItem");
 const getPages = require("./pages/getPages");
+const getNaverProfile = require("./naver/getNaverProfile");
 const postPage = require("./pages/postPage");
 const deletePages = require("./pages/deletePages");
 const getReceipt = require("./receipt/getReceipt");
@@ -21,6 +22,7 @@ module.exports = {
   adminLogout,
   getItem,
   postItem,
+  getNaverProfile,
   getPages,
   postPage,
   deletePages,
