@@ -78,7 +78,7 @@ const postPageByStore = async (data) => {
   const storeLink = store.replace("_pages", "");
   const { _id, post_key } = newData;
   const body = `아래 링크를 이용해 주세요! \n
-   ${process.env.LOCAL_LINK}/stores/${storeLink}/${_id} \n
+   ${process.env.CLIENT_URL}/stores/${storeLink}/${_id} \n
    감사합니다.`;
   const post_comment_url = `https://openapi.band.us/v2/band/post/comment/create?access_token=${process.env.BAND_ACCESS_TOKEN}&band_key=${process.env.BAND_TEST_KEY}&post_key=${post_key}&body=${body}`;
   await axios.post(post_comment_url);
