@@ -3,7 +3,7 @@ const axios = require("axios");
 const postComment = async (receipt) => {
   const { nickname, isDelivery, purchased_items } = receipt;
 
-  const pickup = isDelivery ? "집으로 배달" : "픽업 하기";
+  const pickup = isDelivery ? "배달" : "픽업 하기";
   const purchased_items_filter = purchased_items.map((item) => `${item.name} ${item.quantity}개`);
   const get_posts_url = `https://openapi.band.us/v2/band/posts?access_token=${process.env.BAND_ACCESS_TOKEN}&band_key=${process.env.BAND_TEST_KEY}&locale=ko_KO`;
   const response = await axios.get(get_posts_url);
