@@ -20,6 +20,7 @@ module.exports = () => {
             nickname: user.nickname,
           };
           const token = jwt.sign(payload, "jwtSecret", { expiresIn: "180d" }, {});
+          console.log("naverStrategy 입니다.");
           user.token = token;
           done(null, user);
         } catch (error) {

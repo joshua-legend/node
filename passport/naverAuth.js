@@ -24,6 +24,7 @@ exports.naverCallback = (req, res, next) => {
         email: user.email,
       };
       const token = jwt.sign(payload, "jwtSecret", { expiresIn: "180d" });
+      console.log("naverAuth 입니다.");
       res.cookie("token", token, { httpOnly: true });
       return res.redirect(`${process.env.CLIENT_REAL_URL}/test`);
     }
