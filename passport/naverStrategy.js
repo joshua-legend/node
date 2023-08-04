@@ -19,7 +19,7 @@ module.exports = () => {
             provider: user.provider,
             nickname: user.nickname,
           };
-          const token = jwt.sign(payload, "jwtSecret", { expiresIn: "1h" }, {});
+          const token = jwt.sign(payload, "jwtSecret", { expiresIn: "180d" }, {});
           user.token = token;
           done(null, user);
         } catch (error) {

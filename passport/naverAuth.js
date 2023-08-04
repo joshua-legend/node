@@ -23,9 +23,9 @@ exports.naverCallback = (req, res, next) => {
         name: user.name,
         email: user.email,
       };
-      const token = jwt.sign(payload, "jwtSecret", { expiresIn: "1h" });
+      const token = jwt.sign(payload, "jwtSecret", { expiresIn: "180d" });
       res.cookie("token", token, { httpOnly: true });
-      return res.redirect(`${process.env.CLIENT_URL}/abc`);
+      return res.redirect(`${process.env.CLIENT_REAL_URL}/test`);
     }
   )(req, res, next);
 };

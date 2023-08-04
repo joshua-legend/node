@@ -12,7 +12,7 @@ const authNaver = async (req, res, next) => {
     name: profile.name,
     email: profile.email,
   };
-  const token = jwt.sign(payload, "jwtSecret", { expiresIn: "1h" });
+  const token = jwt.sign(payload, "jwtSecret", { expiresIn: "180d" });
   return res.status(200).json({ success: true, token, payload });
 };
 
