@@ -18,8 +18,8 @@ exports.applyRoutes = (app) => {
   app.post("/deleteItemsByStore", routers.deleteItem);
   app.post("/auth/naver", routers.authNaver);
   app.get("/auth/naver/profile/:id", routers.getNaverProfile);
-
   app.get("/auth/naver/logout", passport.authenticate("naver")); // 네이버 로그인을 요청하는 경로
+
   app.get("/auth/naver/callback", naverAuth.naverCallback);
   app.get("/auth/naver/disconnect", naverAuth.naverDisconnect);
   app.get("/auth/kakao", passport.authenticate("kakao"));

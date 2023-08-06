@@ -34,6 +34,7 @@ const loginAdmin = async (username, password) => {
 };
 
 const getItemsByStore = async (_id) => {
+  console.log(_id);
   const items = await client.db(DB).collection("gochon_pages").findOne({ _id });
   if (!items) return { message: `Store with id ${_id} not found` };
   const data = {
